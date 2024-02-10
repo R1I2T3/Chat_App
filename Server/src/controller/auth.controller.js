@@ -2,7 +2,6 @@ import User from "../model/user.model.js";
 import bcrypt from "bcrypt";
 import generateTokenAndSetCookie from "../utils/generateTokenAndSetCookie.js";
 
-
 const SignUp = async (req, res) => {
   try {
     const { fullName, username, email, password } = req.body;
@@ -44,7 +43,38 @@ const SignUp = async (req, res) => {
   }
 };
 
-const SignIn = async () => {};
+const SignIn = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    if (!username || !password) {
+      return res
+        .status(401)
+        .message({ error: "all input fields are not filled" });
+    }
+    const currentUser = await User.findOne({ username });
+    if (!currentUser) {
+      return res.status(404).json({ error: "Incorrect username or password" });
+    }
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      currentUser.password
+    );
+    if (!isPasswordCorrect) {
+      return res.status(404).json({ error: "Incorrect username or password" });
+    }
+    generateTokenAndSetCookie(currentUser._id, res);
+    return res.status(201).json({
+      _id: currentUser._id,
+      fullName: currentUser.fullName,
+      username: currentUser.username,
+      email: currentUser.email,
+      profilePic: currentUser.profilePic,
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ error: error.message });
+  }
+};
 
 const LogOut = async () => {};
 
