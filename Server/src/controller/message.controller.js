@@ -33,6 +33,23 @@ const sendMessage = async (req, res) => {
   }
 };
 
-const getMessage = async () => {};
+const getMessage = async (req, res) => {
+  try {
+    const senderId = req.user._id;
+    const { id: receiverId } = req.params;
+    const Messages = await Chat.findOne({
+      participants: { $all: [senderId, receiverId] },
+    }).populate("messages");
+    if (!Messages) {
+      return res
+        .status(404)
+        .json({ message: "No message found in following chat" });
+    }
+    return res.status(200).json(Messages);
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ error: error.message });
+  }
+};
 
 export { sendMessage, getMessage };
