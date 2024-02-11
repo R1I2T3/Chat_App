@@ -4,6 +4,7 @@ import connect from "./config/db.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import AuthRouter from "./routes/auth.route.js";
+import MessageRouter from "./routes/message.route.js";
 //dotenv configuration
 config();
 
@@ -18,6 +19,7 @@ app.use(cors());
 
 // routes
 app.use("/api/auth", AuthRouter);
+app.use("/api/message", MessageRouter);
 
 connect().then(
   app.listen(port, () => {
