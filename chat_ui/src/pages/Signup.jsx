@@ -1,14 +1,25 @@
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useSignup } from "../lib/api/auth";
+import toast from "react-hot-toast";
 const Signup = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
-    console.log(data);
+  const { mutateAsync: signUpMutate, isPending } = useSignup();
+  const onSubmit = async (data, e) => {
+    e.preventDefault();
+    const gettingData = await signUpMutate(data);
+    console.log(gettingData);
+    if (gettingData.response.data.message) {
+      return toast.error(gettingData.response.data.message);
+    }
   };
+  if (isPending) {
+    return <span className="loading loading-spinner loading-md"></span>;
+  }
   return (
     <div className="w-[450px] bg-white-800 rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0 border border-gray-100">
       <div className="w-[100%] flex justify-center items-center flex-col ">

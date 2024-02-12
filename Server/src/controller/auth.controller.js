@@ -10,12 +10,12 @@ const SignUp = async (req, res) => {
         (field) => field?.trim() === ""
       )
     ) {
-      return res.status(401).json({ error: "please give all input fields" });
+      return res.status(401).json({ message: "please give all input fields" });
     }
     const isUserExists = await User.findOne({ $or: [{ username }, { email }] });
     if (isUserExists) {
       return res
-        .status(401)
+        .status(409)
         .json({ message: "User already exists with username and password" });
     }
     const hashPassword = await bcrypt.hash(password, 10);
@@ -26,7 +26,7 @@ const SignUp = async (req, res) => {
       password: hashPassword,
     });
     if (!newUser) {
-      return res.status(403).json({ error: "Error while signing up" });
+      return res.status(403).json({ message: "Error while signing up" });
     }
     generateTokenAndSetCookie(newUser._id, res);
     await newUser.save();

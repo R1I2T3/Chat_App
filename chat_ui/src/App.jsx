@@ -4,8 +4,16 @@ import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import UpdateProfile from "./pages/UpdateProfile";
 import { Toaster } from "react-hot-toast";
+import useChatStore from "./lib/store/store";
+import { useEffect, useState } from "react";
 const App = () => {
-  const isAuthenticated = false;
+  const user = useChatStore((state) => state.user);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  useEffect(() => {
+    if (user) {
+      setIsAuthenticated(true);
+    }
+  }, [user]);
   return (
     <BrowserRouter>
       <div className="p-4 h-screen flex items-center justify-center">
