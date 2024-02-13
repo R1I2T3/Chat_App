@@ -36,14 +36,14 @@ const useLogin = () => {
     },
     onError: (error) => {
       if (error.response) {
-        toast.error(error?.response?.data?.message);
+        toast.error(error?.response?.data?.error);
       }
     },
     onSuccess: (data) => {
       localStorage.setItem("chat_app_Data", JSON.stringify(data));
       setUser(data);
       navigate("/");
-      toast.success("User sign up successfully");
+      toast.success("User Logged in successfully");
     },
   });
   return mutation;

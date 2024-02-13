@@ -1,13 +1,23 @@
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useLogin } from "../lib/api/auth";
 const Login = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
-    console.log(data);
+  const { mutateAsync: LoginMutate, isPending } = useLogin();
+  if (isPending) {
+    return (
+      <div className="w-full h-screen justify-center items-center">
+        <span className="loading loading-spinner loading-md"></span>
+      </div>
+    );
+  }
+  const onSubmit = async (data, e) => {
+    e.preventDefault();
+    await LoginMutate(data);
   };
   return (
     <div className="w-[450px] bg-white-800 rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0 border border-gray-100">
