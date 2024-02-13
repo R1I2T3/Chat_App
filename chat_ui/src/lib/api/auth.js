@@ -18,8 +18,8 @@ const useSignup = () => {
       }
     },
     onSuccess: (data) => {
-      localStorage.setItem("chat_app_Data", JSON.stringify(data));
-      setUser(data);
+      localStorage.setItem("chat_app_Data", JSON.stringify(data.data));
+      setUser(data.data);
       navigate("/");
       toast.success("User sign up successfully");
     },
