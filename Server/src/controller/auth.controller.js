@@ -78,7 +78,7 @@ const SignIn = async (req, res) => {
 
 const LogOut = async (req, res) => {
   try {
-    res.clearCookie("chat_app");
+    res.clearCookie("chat_cookie");
     return res.status(200).json({ message: "User log out successfully" });
   } catch (error) {
     console.log(error);

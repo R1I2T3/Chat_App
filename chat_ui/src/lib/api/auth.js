@@ -3,6 +3,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import useChatStore from "../store/store";
 import { useNavigate } from "react-router-dom";
+
 const useSignup = () => {
   const navigate = useNavigate();
   const setUser = useChatStore((state) => state.setUser);
@@ -40,8 +41,8 @@ const useLogin = () => {
       }
     },
     onSuccess: (data) => {
-      localStorage.setItem("chat_app_Data", JSON.stringify(data));
-      setUser(data);
+      localStorage.setItem("chat_app_Data", JSON.stringify(data.data));
+      setUser(data.data);
       navigate("/");
       toast.success("User Logged in successfully");
     },
@@ -49,6 +50,26 @@ const useLogin = () => {
   return mutation;
 };
 
-const useLogout = () => {};
+const useLogout = () => {
+  const navigate = useNavigate();
+  const setUser = useChatStore((state) => state.setUser);
+  const mutation = useMutation({
+    mutationFn: async () => {
+      await axios.post("/api/auth/logout");
+    },
+    onError: (error) => {
+      if (error.response) {
+        toast.error(error?.response?.data?.error);
+      }
+    },
+    onSuccess: () => {
+      localStorage.removeItem("chat_app_Data");
+      setUser(null);
+      navigate("/login");
+      toast.success("user logged out successfully");
+    },
+  });
+  return mutation;
+};
 
 export { useLogin, useSignup, useLogout };
