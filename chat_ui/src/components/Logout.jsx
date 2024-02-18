@@ -16,7 +16,7 @@ const Logout = () => {
     navigate("/login");
   };
   return (
-    <button type="submit" onClick={logoutHandler} className="btn btn-primary">
+    <button type="submit" onClick={logoutHandler} className="btn btn-outline">
       Logout
     </button>
   );
