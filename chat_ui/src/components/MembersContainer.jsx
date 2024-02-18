@@ -19,12 +19,13 @@ const MembersContainer = () => {
     );
   }
   if (isError) {
-    return toast.error("Error while fetching user");
+    toast.error("Error while fetching user");
+    return <h2 className="flex justify-center items-center">Error!</h2>;
   }
   return (
     <div className="w-full flex flex-col justify-center items-center">
       <SearchHeader />
-      <div className="divider"></div>
+      <div className="divider w-full"></div>
       <div className="w-full h-[300px] flex flex-col overflow-y-scroll">
         {users.length !== 0 ? (
           users.map((user) => {
@@ -35,7 +36,7 @@ const MembersContainer = () => {
                   userImage={user.profilePic}
                   username={user.username}
                 />
-                <div className="divider w- my-0"></div>
+                <div className="divider w-full my-0"></div>
               </>
             );
           })
