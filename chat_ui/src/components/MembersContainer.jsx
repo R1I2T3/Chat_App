@@ -26,7 +26,7 @@ const MembersContainer = () => {
     <div className="w-full flex flex-col justify-center items-center">
       <SearchHeader />
       <div className="divider w-full"></div>
-      <div className="w-full h-[300px] flex flex-col overflow-y-scroll">
+      <div className="w-full h-[390px] flex flex-col overflow-y-scroll">
         {users.length !== 0 ? (
           users.map((user) => {
             return (
