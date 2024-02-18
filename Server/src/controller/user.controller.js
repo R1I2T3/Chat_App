@@ -3,7 +3,11 @@ import bcrypt from "bcrypt";
 import { v2 as cloudinary } from "cloudinary";
 const fetchUser = async (req, res) => {
   try {
-    const users = await User.find().select("-password");
+    const currentUser = req.user;
+    let users = await User.find().select("-password");
+    users = users.filter(
+      (user) => currentUser._id.toString() !== user._id.toString()
+    );
     return res.status(200).json(users);
   } catch (error) {
     console.log(error.message);

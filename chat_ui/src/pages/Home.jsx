@@ -6,7 +6,9 @@ const Home = () => {
   return (
     <div className="w-[700px] h-[600px] bg-white-800 rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0 border border-gray-100 flex flex-col">
       <div className="w-[100%] flex justify-between items-center">
-        <h1 className="text-2xl text-bold pl-4 pt-4 text-orange-500">RChat</h1>
+        <h1 className="text-2xl text-bold pl-4 pt-4 text-orange-500">
+          CosmoChat
+        </h1>
         <div className="w-[35%] h-full flex justify-around pt-4">
           <Logout />
           <UpdateProfileBtn />

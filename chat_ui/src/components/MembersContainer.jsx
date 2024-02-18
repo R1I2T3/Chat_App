@@ -31,11 +31,7 @@ const MembersContainer = () => {
           users.map((user) => {
             return (
               <>
-                <ProfileView
-                  key={user.username}
-                  userImage={user.profilePic}
-                  username={user.username}
-                />
+                <ProfileView conversation={user} key={user._id} />
                 <div className="divider w-full my-0"></div>
               </>
             );

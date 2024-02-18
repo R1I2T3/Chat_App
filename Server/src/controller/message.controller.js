@@ -1,6 +1,5 @@
 import Chat from "../model/Chat.model.js";
 import Message from "../model/message.model.js";
-
 const sendMessage = async (req, res) => {
   try {
     const user = req.user;
@@ -8,6 +7,9 @@ const sendMessage = async (req, res) => {
     const { message } = req.body;
     if (!message) {
       return res.status(401).json({ error: "Enter message to be send" });
+    }
+    if (receiverId === user._id) {
+      return res.status(401).json({ error: "you can't message yourself" });
     }
     const newMessage = new Message({
       message,
@@ -42,7 +44,7 @@ const getMessage = async (req, res) => {
     }).populate("messages");
     if (!Messages) {
       return res
-        .status(404)
+        .status(200)
         .json({ message: "No message found in following chat" });
     }
     return res.status(200).json(Messages);
