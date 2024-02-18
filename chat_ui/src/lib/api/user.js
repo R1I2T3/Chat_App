@@ -1,8 +1,9 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
 import useChatStore from "../store/store";
 import { useNavigate } from "react-router-dom";
+
 const useUpdateProfile = () => {
   const navigate = useNavigate();
   const setUser = useChatStore((state) => state.setUser);
@@ -31,4 +32,15 @@ const useUpdateProfile = () => {
   return mutation;
 };
 
-export { useUpdateProfile };
+const useGetUsers = () => {
+  const queryData = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const response = await axios.get("/api/users");
+      return response.data;
+    },
+  });
+  return queryData;
+};
+
+export { useUpdateProfile, useGetUsers };

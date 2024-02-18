@@ -41,6 +41,7 @@ const useLogin = () => {
       }
     },
     onSuccess: (data) => {
+      console.log(data.data);
       localStorage.setItem("chat_app_Data", JSON.stringify(data.data));
       setUser(data.data);
       navigate("/");
