@@ -1,5 +1,6 @@
 import Chat from "../model/Chat.model.js";
 import Message from "../model/message.model.js";
+import User from "../model/user.model.js";
 import { getReceiverSocketId, io } from "../socket/index.js";
 const sendMessage = async (req, res) => {
   try {
@@ -30,8 +31,11 @@ const sendMessage = async (req, res) => {
     }
     await Promise.all([isConversationExists.save(), newMessage.save()]);
     const receiverSocketId = getReceiverSocketId(receiverId);
-    if (receiverId) {
-      io.to(receiverSocketId).emit("newMessage", newMessage);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newMessage", {
+        message: newMessage,
+        username: user.username,
+      });
     }
     res.status(201).json({ message: "New message created", chat: newMessage });
   } catch (error) {
