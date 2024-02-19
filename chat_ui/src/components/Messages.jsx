@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import useListenMessages from "../Hooks/useListenMessages";
 import { useGetMessages } from "../lib/api/message";
 import useChatStore from "../lib/store/store";
@@ -6,7 +6,12 @@ import Message from "./Message";
 const Messages = () => {
   const { messages } = useChatStore();
   const { isLoading, isError } = useGetMessages();
-  const messagesEndRef = useRef(null);
+  const lastMessageRef = useRef();
+  useEffect(() => {
+    setTimeout(() => {
+      lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  }, [messages]);
   useListenMessages();
   // Adjust the interval here
   if (isLoading) {
@@ -28,11 +33,13 @@ const Messages = () => {
       ) : (
         <div className="px-4  h-[380px] overflow-y-scroll">
           {messages.map((message) => (
-            <Message key={message._id} message={message} />
+            <div key={message._id} ref={lastMessageRef}>
+              <Message message={message} />
+            </div>
           ))}
         </div>
       )}
-      <div ref={messagesEndRef} />
+      <div />
     </div>
   );
 };
