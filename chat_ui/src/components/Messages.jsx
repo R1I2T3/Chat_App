@@ -6,13 +6,13 @@ import Message from "./Message";
 const Messages = () => {
   const { messages } = useChatStore();
   const { isLoading, isError } = useGetMessages();
+  useListenMessages();
   const lastMessageRef = useRef();
   useEffect(() => {
     setTimeout(() => {
       lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
     }, 100);
   }, [messages]);
-  useListenMessages();
   // Adjust the interval here
   if (isLoading) {
     return (
