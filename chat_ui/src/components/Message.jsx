@@ -3,6 +3,7 @@ import formatTimeAgo from "../utils/dateFormat";
 /* eslint-disable react/prop-types */
 const Message = ({ message }) => {
   const { user, selectedConversation } = useChatStore();
+  const shakeClass = message.shouldShake ? "shake" : "";
   return (
     <div
       className={`chat  ${
@@ -23,8 +24,8 @@ const Message = ({ message }) => {
       </div>
       <div
         className={`chat-bubble text-white ${
-          user._id === message.sender ? "bg-blue-500" : "bg-green-500"
-        }`}
+          user._id === message.sender ? "bg-blue-500" : ""
+        } ${shakeClass}`}
       >
         {message?.message}
       </div>

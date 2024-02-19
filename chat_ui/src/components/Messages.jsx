@@ -1,9 +1,14 @@
+import { useRef } from "react";
+import useListenMessages from "../Hooks/useListenMessages";
 import { useGetMessages } from "../lib/api/message";
 import useChatStore from "../lib/store/store";
 import Message from "./Message";
 const Messages = () => {
   const { messages } = useChatStore();
   const { isLoading, isError } = useGetMessages();
+  const messagesEndRef = useRef(null);
+  useListenMessages();
+  // Adjust the interval here
   if (isLoading) {
     return (
       <div className="w-full h-[380px] flex justify-center items-center">
@@ -27,6 +32,7 @@ const Messages = () => {
           ))}
         </div>
       )}
+      <div ref={messagesEndRef} />
     </div>
   );
 };

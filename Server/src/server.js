@@ -7,10 +7,9 @@ import AuthRouter from "./routes/auth.route.js";
 import MessageRouter from "./routes/message.route.js";
 import UserRouter from "./routes/user.route.js";
 import { v2 as cloudinary } from "cloudinary";
+import { app, server } from "./socket/index.js";
 //dotenv configuration
 config();
-
-const app = express();
 
 const port = process.env.port || 3000;
 
@@ -25,7 +24,7 @@ app.use("/api/message", MessageRouter);
 app.use("/api/users", UserRouter);
 
 connect().then(
-  app.listen(port, () => {
+  server.listen(port, () => {
     console.log(`Server is running on port ${port}`);
   })
 );

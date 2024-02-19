@@ -5,6 +5,8 @@ const ProfileView = ({ conversation }) => {
   const { selectedConversation, setSelectedConversation } = useChatStore();
   const user = useChatStore((state) => state.user);
   const isSelected = selectedConversation?._id === conversation?._id;
+  const { onlineUser } = useChatStore();
+  const isOnline = onlineUser.includes(conversation._id);
   return (
     <div
       className={`w-full h-[60px] p-3 flex justify-between items-center ${
@@ -12,7 +14,7 @@ const ProfileView = ({ conversation }) => {
       }`}
       onClick={() => setSelectedConversation(conversation)}
     >
-      <div className="w-[40%]">
+      <div className={`avatar w-[20%] ${isOnline ? "online" : ""}`}>
         <img
           src={conversation?.profilePic || "/defaultProfilePic.png"}
           alt="profile"

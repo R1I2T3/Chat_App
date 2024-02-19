@@ -30,10 +30,10 @@ const MembersContainer = () => {
         {users.length !== 0 ? (
           users.map((user) => {
             return (
-              <>
-                <ProfileView conversation={user} key={user._id} />
+              <div key={user._id}>
+                <ProfileView conversation={user} />
                 <div className="divider w-full my-0"></div>
-              </>
+              </div>
             );
           })
         ) : (
